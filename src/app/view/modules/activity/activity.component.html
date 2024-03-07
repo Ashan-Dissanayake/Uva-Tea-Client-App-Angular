@@ -1,0 +1,141 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+
+  <mat-grid-tile [colspan]="7" [rowspan]="7">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Activity Detail</mat-card-title>
+      </mat-card-header>
+      <mat-card-content id="fertilizerform">
+
+        <mat-form [formGroup]="form" >
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select a Date</mat-label>
+            <input matInput [matDatepicker]="doactivity" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="doactivity" ></mat-datepicker-toggle>
+            <mat-datepicker #doactivity></mat-datepicker>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Enter a Time</mat-label>
+            <input type="time" matInput formControlName="time" id="activityTime">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select a Approver</mat-label>
+            <mat-select formControlName="approver">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let approver of approvers" [value]="approver" >{{approver.callingname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select Activity Type</mat-label>
+            <mat-select formControlName="activitytype">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let activitytype of activitytypes" [value]="activitytype" >{{activitytype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()" [disabled]="!enaadd" >Add</button>
+            <button mat-raised-button (click)="clear()">Clear</button>
+            <button mat-raised-button (click)="update()" [disabled]="!enaupd">Update</button>
+            <button mat-raised-button  (click)="delete()" [disabled]="!enadel" >Delete</button>
+          </div>
+
+        </mat-form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="5" [rowspan]="7">
+    <mat-card id="ssearch">
+      <mat-card-header>
+        <mat-card-title>Activity Search</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <mat-form [formGroup]="ssearch">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Approver</mat-label>
+            <mat-select formControlName="ssapprover">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let approver of approvers" [value]="approver.id" >{{approver.callingname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Date</mat-label>
+            <input matInput [matDatepicker]="activitydate" formControlName="ssdate">
+            <mat-datepicker-toggle matIconSuffix [for]="activitydate" ></mat-datepicker-toggle>
+            <mat-datepicker #activitydate></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Activity</mat-label>
+            <mat-select formControlName="ssactivitytype">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let activitytype of activitytypes" [value]="activitytype.id" >{{activitytype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <div>
+            <button mat-raised-button color="primary" (click)="btnSearchMc()" ><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button color="primary" (click)="btnSearchClearMc()"><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+        </mat-form>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="12" [rowspan]="6">
+    <mat-card class="tableview">
+      <mat-card-header>
+        <mat-card-title>Activity Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl">
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef>{{headers[i]}}</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{uiassist.getProperty(element,binders[i])}} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-form [formGroup]="csearch" class="csearch">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn" (keyup)="filterTable()">
+                </mat-form-field>
+              </mat-form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row id="th" *matHeaderRowDef="columns"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns:columns" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}" ></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="5" [pageSizeOptions]="[3,5,10,20]" ></mat-paginator>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+
+
+</mat-grid-list>

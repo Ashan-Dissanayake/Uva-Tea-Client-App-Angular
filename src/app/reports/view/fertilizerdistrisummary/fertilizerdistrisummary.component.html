@@ -1,0 +1,76 @@
+<mat-grid-list [cols]="1" rowHeight="13rem">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <mat-card>
+      <mat-card-header><mat-card-title>Fertilizer Distribution Summary By Given Two Years</mat-card-title></mat-card-header>
+      <mat-card-content id="ferdissummaray">
+
+        <mat-form [formGroup]="fertilizerdistribution">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Past Year</mat-label>
+            <input matInput [matDatepicker]="searchyear1" formControlName="pastyear">
+            <mat-datepicker-toggle matIconSuffix [for]="searchyear1" ></mat-datepicker-toggle>
+            <mat-datepicker #searchyear1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Present Year</mat-label>
+            <input matInput [matDatepicker]="searchyear2" formControlName="presentyear">
+            <mat-datepicker-toggle matIconSuffix [for]="searchyear2" ></mat-datepicker-toggle>
+            <mat-datepicker #searchyear2></mat-datepicker>
+          </mat-form-field>
+
+          <button mat-raised-button (click)="btnSearch()" ><mat-icon>search</mat-icon>Get Reports</button>
+
+        </mat-form>
+
+        <p>{{responseStasus}}</p>
+
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+    <mat-card>
+      <mat-card-header><mat-card-title>Table View</mat-card-title></mat-card-header>
+      <mat-card-content>
+
+        <mat-table [dataSource]="data">
+          <ng-container *ngFor="let column of columns; let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef> {{ headers[i] }} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element[binders[i]] }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+
+    <mat-card>
+      <mat-card-header><mat-card-title>Column Chart</mat-card-title></mat-card-header>
+      <mat-card-content><div #columnchart></div></mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+
+    <mat-card>
+      <mat-card-header><mat-card-title>Previous Year Distrbution</mat-card-title></mat-card-header>
+      <mat-card-content><div #piechart1></div></mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header><mat-card-title>Present Year Distrbution</mat-card-title></mat-card-header>
+      <mat-card-content><div #piechart2></div></mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

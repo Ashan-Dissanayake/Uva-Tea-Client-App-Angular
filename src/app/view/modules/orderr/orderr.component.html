@@ -1,0 +1,196 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+
+  <mat-grid-tile [colspan]="7" [rowspan]="7">
+    <mat-card  id="invoiceform">
+      <mat-card-header>
+        <mat-card-title>Order Detail</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <mat-form [formGroup]="form" >
+
+          <mat-form-field appearance="outline">
+            <mat-label>Order Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date Of Order</mat-label>
+            <input matInput [matDatepicker]="doorder" formControlName="doorder">
+            <mat-datepicker-toggle matIconSuffix [for]="doorder" ></mat-datepicker-toggle>
+            <mat-datepicker #doorder></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date Of Expexted</mat-label>
+            <input matInput [matDatepicker]="doexpt" formControlName="doexpected">
+            <mat-datepicker-toggle matIconSuffix [for]="doexpt" ></mat-datepicker-toggle>
+            <mat-datepicker #doexpt></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Distributor</mat-label>
+            <mat-select formControlName="distributor">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let distributor of distributors" [value]="distributor" >{{distributor.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="innertable">
+
+            <mat-form [formGroup]="innerform">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Product</mat-label>
+                <mat-select formControlName="product">
+                  <mat-option [value]="null" selected>Not Selected</mat-option>
+                  <mat-option *ngFor="let product of products" [value]="product">{{product.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Quantity</mat-label>
+                <input matInput formControlName="qty">
+              </mat-form-field>
+
+<!--              <button mat-raised-button id="btnAdd" (click)="btnaddMc()" >Add</button>-->
+              <button mat-raised-button id="btnAdd" (click)="btnaddMc()" >Add</button>
+
+            </mat-form>
+
+            <mat-table [dataSource]="indata">
+              <ng-container *ngFor="let column of incolumns;let i = index;" [matColumnDef]="column">
+                <mat-header-cell *matHeaderCellDef> {{inheaders[i]}} </mat-header-cell>
+                <mat-cell *matCellDef="let element" >
+                  <div *ngIf="i<inbinders.length-1" [innerHTML]="uiassist.getProperty(element, inbinders[i])"></div>
+                  <div *ngIf="i>=inbinders.length-1">
+                    <button mat-raised-button (click)="deleteRaw(element)">Remove</button>
+                  </div>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="incolumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: incolumns"></mat-row>
+            </mat-table>
+
+          </div>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Grand Total</mat-label>
+            <input [valueAsNumber]="costexpected" type="number" readonly matInput formControlName="expectedgrandtotal">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Order Status</mat-label>
+            <mat-select formControlName="orderstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let orderstatus of orderstatuss" [value]="orderstatus" >{{orderstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()" [disabled]="!enaadd" >Add</button>
+            <button mat-raised-button (click)="clear()" >Clear</button>
+            <button mat-raised-button  (click)="update()" [disabled]="!enaupd">Update</button>
+            <button mat-raised-button  (click)="delete()" [disabled]="!enadel" >Delete</button>
+          </div>
+
+        </mat-form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="5" [rowspan]="7" style="margin-left: 15px;">
+    <mat-card id="ssearch">
+      <mat-card-header>
+        <mat-card-title> Order Search</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <mat-form [formGroup]="ssearch">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search By Order Date</mat-label>
+            <input matInput [matDatepicker]="doorderser" formControlName="ssdate">
+            <mat-datepicker-toggle matIconSuffix [for]="doorderser" ></mat-datepicker-toggle>
+            <mat-datepicker #doorderser></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search By Order Name</mat-label>
+            <input matInput formControlName="ssname">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Distributor</mat-label>
+            <mat-select formControlName="ssdistributor">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let distributor of distributors" [value]="distributor.id" >{{distributor.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Status</mat-label>
+            <mat-select formControlName="ssstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let orderstatus of orderstatuss" [value]="orderstatus.id" >{{orderstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div>
+            <button mat-raised-button color="primary" (click)="btnSearchMc()" ><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button color="primary" (click)="btnSearchClearMc()" ><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+        </mat-form>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="12" [rowspan]="6">
+    <mat-card class="tableview">
+      <mat-card-header>
+        <mat-card-title> Order View Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl">
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef>{{headers[i]}}</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{uiassist.getProperty(element,binders[i])}} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-form [formGroup]="csearch" class="csearch">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn" (keyup)="filterTable()">
+                </mat-form-field>
+              </mat-form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row id="th" *matHeaderRowDef="columns"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
+
+          <mat-row *matRowDef="let row; columns:columns"  (click)="fillForm(row)"  [ngClass]="{'selected-row': row === selectedrow}" ></mat-row>
+
+        </mat-table>
+
+        <mat-paginator showFirstLastButtons [length]="20" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]" ></mat-paginator>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+
+
+</mat-grid-list>

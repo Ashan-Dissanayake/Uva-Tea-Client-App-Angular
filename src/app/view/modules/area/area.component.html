@@ -1,0 +1,206 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+
+  <mat-grid-tile [colspan]="4" [rowspan]="10">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Area Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content id="areaform">
+
+        <mat-form [formGroup]="form" >
+
+          <mat-form-field appearance="outline">
+            <mat-label>Code</mat-label>
+            <input matInput formControlName="code">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Acres</mat-label>
+            <input matInput formControlName="acres">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Attached</mat-label>
+            <input matInput [min]="mindate" [matDatepicker]="doattached" formControlName="doattached">
+            <mat-datepicker-toggle matIconSuffix [for]="doattached" ></mat-datepicker-toggle>
+            <mat-datepicker #doattached></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Plant Count</mat-label>
+            <input matInput formControlName="plantcount">
+          </mat-form-field>
+
+          <div id="imgpanel">
+          <img [src]="imageempurl">
+          <input id="userImage" hidden="hidden" (change)="selectImage($event)" Select type="file" formControlName="map">
+          <label for="userImage" id="selectbutton" >Select</label>
+          <label id="clearbutton" (click)="ClearImage()" >Clear</label>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Proofing</mat-label>
+            <input matInput [matDatepicker]="doproofing" formControlName="doproofing">
+            <mat-datepicker-toggle matIconSuffix [for]="doproofing" ></mat-datepicker-toggle>
+            <mat-datepicker #doproofing></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Root</mat-label>
+            <mat-select formControlName="root">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let root of roots" [value]="root" >{{root.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Field-Officer</mat-label>
+            <mat-select formControlName="empfieldofficer">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let fieldofficer of fieldofficers "  [value]="fieldofficer" >{{fieldofficer.callingname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Supervisor</mat-label>
+            <mat-select formControlName="empsupervisor">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let supervisor of supervisors" [value]="supervisor" >{{supervisor.callingname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Area Status</mat-label>
+            <mat-select formControlName="areastatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let areastatus of areastatusses" [value]="areastatus" >{{areastatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Area Category</mat-label>
+            <mat-select formControlName="areacategory">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let areacategory of areacategorys" [value]="areacategory" >{{areacategory.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()" [disabled]="!enaadd" >Add</button>
+            <button mat-raised-button (click)="clear()" >Clear</button>
+            <button mat-raised-button (click)="update()" [disabled]="!enaupd">Update</button>
+            <button mat-raised-button (click)="delete()" [disabled]="!enadel" >Delete</button>
+          </div>
+
+        </mat-form>
+
+      </mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="8" [rowspan]="4">
+    <mat-card id="ssearch">
+      <mat-card-header>
+        <mat-card-title>Area Search</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <mat-form [formGroup]="ssearch">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Code</mat-label>
+            <input matInput formControlName="sscode">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Serach by Filed-Officer</mat-label>
+            <mat-select formControlName="ssempfieldofficer">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let fieldofficer of fieldofficers" [value]="fieldofficer.id">{{fieldofficer.callingname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Serach by Supervisor</mat-label>
+            <mat-select formControlName="ssempsupervisor">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let supervisor of supervisors" [value]="supervisor.id">{{supervisor.callingname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Serach by Category</mat-label>
+            <mat-select formControlName="ssareacategory">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let areacategory of areacategorys" [value]="areacategory.id">{{areacategory.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Serach by Root</mat-label>
+            <mat-select formControlName="ssroot">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let root of roots" [value]="root.id">{{root.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div>
+            <button mat-raised-button color="primary" (click)="btnSearchMc()" ><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button color="primary" (click)="btnSearchClearMc()" ><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+
+        </mat-form>
+
+      </mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="8" [rowspan]="6">
+    <mat-card class="tableview">
+      <mat-card-header>
+        <mat-card-title>Area Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl">
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef>{{headers[i]}}</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{
+              uiassist.getProperty(element,binders[i])
+              }} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-form [formGroup]="csearch" class="csearch">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn"
+                         (keyup)="filterTable()">
+                </mat-form-field>
+              </mat-form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row id="th" *matHeaderRowDef="columns"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns:columns" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}" ></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="5" [pageSizeOptions]="[3,5,10,20]" ></mat-paginator>
+
+      </mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

@@ -1,0 +1,102 @@
+mat-card {
+  width: 170%;
+  height: 100%;
+  margin: 10px 10px -16px 10px !important;
+}
+
+mat-card-content {
+  overflow: auto;
+  height: 100%;
+}
+
+mat-card-header {
+  /*background: #0A5508;*/
+  /*background: #c0d9c3;*/
+  background: #71b07b;
+}
+
+#loading img {
+  width: 30px;
+  height: 30px;
+  margin-left: 200px;
+}
+.csearch {
+  height: 40px;
+  width: 100%;
+  margin-top: 5px;
+}
+#ssearch mat-card-content {
+  padding-top: 30px;
+}
+#ssearch mat-form-field {
+  padding-left: 15px;
+  width: 200px;
+}
+#ssearch #datefield {
+  display: inline;
+  padding-left: 15px;
+  width: 250px;
+  height: 10px;
+}
+
+#ssearch button {
+  width: 195px;
+  margin-left: 10px;
+  margin-top: 5px;
+  background-color: #435f3b;
+}
+.tableview {
+  /*width: 800px;*/
+  overflow: auto;
+  /*display: block;*/
+}
+
+#pluckingform {
+  padding-top: 20px;
+}
+
+
+#imgpanel {
+  height: 100px;
+  margin-bottom: 30px;
+}
+
+#imgpanel img {
+  height: 100px;
+  width: 100px;
+}
+
+#butpanel {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#butpanel button {
+  width: 70px;
+  margin: 3px;
+  background-color: #435f3b;
+  color: white;
+  /*margin-right: 10px;*/
+}
+
+.selected-row {
+  background-color: #c9e6ff!important;
+}
+
+mat-table mat-row:hover {
+  /*background-color: inherit!important;*/
+  background-color: #9AA1CE;
+}
+
+#pluckingform mat-form-field .ng-dirty {
+  background-color: gold;
+}
+
+/*#pluckingform mat-form-field {*/
+/*  padding-top: 30px;*/
+/*}*/
+
+button:disabled {
+  opacity: 0.5;
+}
+

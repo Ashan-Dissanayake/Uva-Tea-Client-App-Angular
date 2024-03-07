@@ -1,0 +1,92 @@
+<mat-grid-list [cols]="2" rowHeight="4rem" >
+
+  <mat-grid-tile [colspan]="2" [rowspan]="1">
+    <h1>Remaining Fertilizer Amount(kg) In Store</h1>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2" [rowspan]="3" id="cardpanel1">
+
+        <mat-card>
+          <mat-card-header> <mat-card-title> U-709 </mat-card-title> </mat-card-header>
+          <mat-card-content><h1>{{u709}}</h1></mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header> <mat-card-title>U-711</mat-card-title> </mat-card-header>
+          <mat-card-content> <h1>{{u711}}</h1> </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header> <mat-card-title>U-716</mat-card-title> </mat-card-header>
+          <mat-card-content><h1>{{u716}}</h1></mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header> <mat-card-title>U-718</mat-card-title> </mat-card-header>
+          <mat-card-content><h1>{{u718}}</h1></mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header> <mat-card-title>U-720</mat-card-title> </mat-card-header>
+          <mat-card-content><h1>{{u720}}</h1></mat-card-content>
+        </mat-card>
+
+
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2" [rowspan]="3" id="cardpanel2">
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>U-724</mat-card-title> </mat-card-header>
+      <mat-card-content><h1>{{u724}}</h1></mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>T-200</mat-card-title> </mat-card-header>
+      <mat-card-content><h1>{{t200}}</h1></mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>T-750</mat-card-title> </mat-card-header>
+      <mat-card-content><h1>{{t750}}</h1></mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>U-721</mat-card-title> </mat-card-header>
+      <mat-card-content><h1>{{u721}}</h1></mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>Dolamite</mat-card-title> </mat-card-header>
+      <mat-card-content><h1>{{dolamite}}</h1></mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2" [rowspan]="3">
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>Upcoming Activities</mat-card-title> </mat-card-header>
+      <mat-card-content>
+
+        <mat-table [dataSource]="data">
+          <ng-container *ngFor="let column of columns; let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef> {{ headers[i] }} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ uiassist.getProperty(element,binders[i])}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header> <mat-card-title>Attendance Summary</mat-card-title> </mat-card-header>
+    </mat-card>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

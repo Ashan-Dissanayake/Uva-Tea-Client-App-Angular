@@ -1,0 +1,167 @@
+<mat-grid-list [cols]="12" rowHeight="4rem" gutterSize="5px">
+
+  <mat-grid-tile [colspan]="7" [rowspan]="7">
+
+    <mat-card>
+      <mat-card-header><mat-card-title>Distributor Details</mat-card-title></mat-card-header>
+
+      <mat-card-content id="distributorform">
+
+        <mat-form [formGroup]="form">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Telephone</mat-label>
+            <input matInput formControlName="telephone">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contact Person</mat-label>
+            <input matInput formControlName="contactperson">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contact Telephone</mat-label>
+            <input matInput formControlName="contactpersontp">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Credit Limit</mat-label>
+            <input matInput formControlName="creditlimit">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Distributor Status</mat-label>
+            <mat-select formControlName="distributorstatus">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let distributorstatus of distributorstatuss" [value]="distributorstatus">{{distributorstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Distributor Type</mat-label>
+            <mat-select formControlName="distributortype">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let distributortype of distributortypes" [value]="distributortype">{{distributortype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()"  [disabled]="!enaadd" >Add</button>
+            <button mat-raised-button (click)="clear()" >Clear</button>
+            <button mat-raised-button (click)="update()" [disabled]="!enaupd">Update</button>
+            <button mat-raised-button  (click)="delete()" [disabled]="!enadel">Delete</button>
+          </div>
+
+        </mat-form>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="5" [rowspan]="7">
+
+    <mat-card id="ssearch">
+      <mat-card-header><mat-card-title>Distributor Search</mat-card-title></mat-card-header>
+      <mat-card-content>
+
+        <mat-form [formGroup]="ssearch">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Name</mat-label>
+            <input matInput formControlName="ssname">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search Email</mat-label>
+            <input matInput formControlName="ssemail">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Distributor Type</mat-label>
+            <mat-select formControlName="ssdistributortype">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let distributortype of distributortypes" [value]="distributortype.id">{{distributortype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <div>
+            <button mat-raised-button color="primary" (click)="btnSearchMc()"  ><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button color="primary" (click)="btnSearchClearMc()" ><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+        </mat-form>
+
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="12" [rowspan]="6">
+
+    <mat-card class="tableview">
+      <mat-card-header>
+        <mat-card-title>Distributor View Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl" align="right">
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef> {{headers[i]}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ uiassist.getProperty(element, binders[i]) }} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-form [formGroup]="csearch" class="csearch">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn" (keyup)="filterTable()">
+                </mat-form-field>
+              </mat-form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columns Sticky: true"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns Sticky: true"></mat-header-row>
+          <mat-row class="mat-row" *matRowDef="let row; columns: columns;" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator class="mat-paginator-sticky" showFirstLastButtons  [length]="100" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]" ></mat-paginator>
+
+      </mat-card-content>
+    </mat-card>
+
+  </mat-grid-tile>
+
+
+</mat-grid-list>

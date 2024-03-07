@@ -1,0 +1,105 @@
+mat-card {
+  width: 170%;
+  height: 100%;
+  margin: 10px 10px -16px 10px !important;
+}
+
+/*#detailmatcard {*/
+/*  height: 90%;*/
+/*}*/
+/*mat-grid-tile:nth-child(1) {*/
+/*  !*background-color: blueviolet;*!*/
+/*  margin-top: -20px;*/
+/*}*/
+
+/*mat-grid-tile:nth-child(2) {*/
+/*  !*background-color: blueviolet;*!*/
+/*  margin-top: -40px;*/
+/*}*/
+
+/*mat-grid-tile:nth-child(3) {*/
+/*  !*background-color: blueviolet;*!*/
+/*  margin-top: -40px;*/
+
+/*}*/
+
+mat-card-content {
+  overflow: auto;
+  height: 100%;
+}
+
+mat-card-header {
+  background: #71b07b;
+}
+
+#loading img {
+  width: 30px;
+  height: 30px;
+  margin-left: 200px;
+}
+.csearch {
+  height: 40px;
+  width: 100%;
+  margin-top: 5px;
+}
+#ssearch mat-card-content {
+  padding-top: 30px;
+}
+#ssearch mat-form-field {
+  padding-left: 15px;
+  width: 200px;
+}
+#ssearch button {
+  width: 195px;
+  margin-left: 10px;
+  margin-top: 5px;
+  background-color: #435f3b;
+}
+.tableview {
+  overflow: auto;
+}
+
+#fertilizerdistributionform {
+  padding-top: 20px;
+}
+
+#butpanel {
+  margin-top: 8px;
+  margin-bottom: 30px;
+  /*background-color: lightblue;*/
+  margin-left: 60px;
+}
+
+#butpanel button {
+  width: 120px;
+  background-color: #435f3b;
+  color: white;
+  margin-left: 12px;
+
+}
+
+.selected-row {
+  background-color: #c9e6ff!important;
+}
+
+mat-table mat-row:hover {
+  background-color: #9AA1CE;
+}
+
+#fertilizerdistributionform mat-form-field .ng-dirty {
+  background-color: gold;
+}
+
+#fertilizerdistributionform mat-form-field {
+  width: 200px;
+  padding-left: 20px;
+}
+
+#disdate {
+  height: 20%;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+

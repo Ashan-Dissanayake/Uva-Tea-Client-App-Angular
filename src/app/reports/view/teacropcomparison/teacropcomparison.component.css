@@ -1,0 +1,36 @@
+mat-card {  width: 100%;  height:100%;  margin: 10px 10px -10px 10px ; }
+
+mat-card-content { overflow: auto; height: 100%; }
+
+mat-card-header {  background: #71b07b; }
+
+mat-row.mat-mdc-row:nth-child(even) {
+  background-color: lightgray!important;
+}
+
+#teacropsummaray {
+  padding-top: 20px;
+}
+
+p {
+  color: red;
+  font-size: medium;
+}
+
+#teacropsummaray mat-form-field {
+  width: 200px;
+  /*padding-left:20px;*/
+}
+
+#teacropsummaray mat-form-field:nth-child(2) {
+  padding-left: 20px;
+  /*padding-left:20px;*/
+}
+
+#teacropsummaray button {
+  width: 150px;
+  margin-left: 20px;
+  height: 45px;
+  background-color: #435f3b;
+  color: white;
+}

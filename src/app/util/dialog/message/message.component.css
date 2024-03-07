@@ -1,0 +1,20 @@
+mat-card {
+  padding: 20px;
+  /*background: #b5d3b5;*/
+  background-color: #b3f0aa;
+}
+
+mat-card-title {
+  padding: 10px 20px 10px 20px;
+}
+
+mat-card-content {
+  padding: 10px 20px 20px 20px;
+}
+
+mat-card button {
+  margin-left: 10px;
+  padding: 5px 40px 5px 40px !important;
+  background-color: #509446;
+  color: white;
+}

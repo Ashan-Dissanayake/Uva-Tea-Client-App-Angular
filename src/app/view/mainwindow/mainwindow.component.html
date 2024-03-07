@@ -1,0 +1,165 @@
+
+<mat-grid-list [cols]="4"  rowHeight="3rem" >
+
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span class="toolbar-left">
+      <button mat-icon-button (click)="opened=!opened" class="btn-nav"><mat-icon>menu</mat-icon></button>
+        <img src="/assets/uva-tea-logo.jpg" class="img-logo">
+      </span>
+
+      <span class="toolbar-right">
+        <label class="lbl-user">{{authService.getUsername()|uppercase}}</label>
+        <img src="assets/pho.jpg" class="img-user"/>
+        <button mat-icon-button (click)="logout()" class="btn-logout"><mat-icon>exit_to_app</mat-icon> </button>
+      </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+  <mat-sidenav [(opened)]="opened" mode="side">
+
+    <mat-selection-list [multiple]="false">
+
+      <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+          <mat-list-item routerLink="home"><mat-icon>home</mat-icon>Home</mat-list-item>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+          <mat-list-item routerLink="mydashboard"><mat-icon>widgets</mat-icon>Dashboard</mat-list-item>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Admin')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>person</mat-icon>Admin</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of adminmenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Area')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>store_mall_directory</mat-icon>Area Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of areamenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Plucking')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>chrome_reader_mode</mat-icon>Plucking Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of pluckingmenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Fertilizer')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>donut_small</mat-icon>Fertilizer Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of fertilizermenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Vehicle')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>commute</mat-icon>Vehicle Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of vehiclemenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Supplier')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>description</mat-icon>Supplier Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of suppliermenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Production')">
+        <mat-expansion-panel-header>
+          <mat-list-item>	<mat-icon>label</mat-icon>Production Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of productionmenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Distributor')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>perm_identity</mat-icon>Distributor Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of distributormenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Order')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>toll</mat-icon>Order Details</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of ordermenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Daily')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>event_note</mat-icon>Daily</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of dailymenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isMenuVisible('Report')">
+        <mat-expansion-panel-header>
+          <mat-list-item><mat-icon>poll</mat-icon>Report</mat-list-item>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let menuItem of reportmenuItems">
+          <mat-list-item *ngIf="menuItem.accessFlag">
+            <mat-list-item [routerLink]="menuItem.accessFlag ? menuItem.routerLink : null">{{ menuItem.name }}</mat-list-item>
+          </mat-list-item>
+        </ng-container>
+      </mat-expansion-panel>
+
+    </mat-selection-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</mat-grid-list>
