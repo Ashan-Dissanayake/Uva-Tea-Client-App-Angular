@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Employee} from "../../../entity/employee";
 import {Area} from "../../../entity/area";
@@ -80,7 +80,7 @@ export class AreaComponent {
 
     this.uiassist = new UiAssist(this);
 
-    this.csearch = fb.group( {
+    this.csearch = this.fb.group( {
 
       "cscode": new FormControl(),
       "csempfieldofficer": new FormControl(),
@@ -226,7 +226,7 @@ export class AreaComponent {
 
     const csearchdata = this.csearch.getRawValue();
 
-    this.data.filterPredicate = (area: Area, filter: string) => {
+    this.data.filterPredicate = (area: Area) => {
 
       return (csearchdata.cscode==null || area.code.includes(csearchdata.cscode)) &&
         (csearchdata.csempfieldofficer==null || area.empfieldofficer.fullname.toLowerCase().includes(csearchdata.csempfieldofficer)) &&
@@ -265,6 +265,7 @@ export class AreaComponent {
     if(query!="") query = query.replace(/^./,"?");
 
     this.loadTable(query);
+
   }
 
   btnSearchClearMc(): void {
@@ -296,7 +297,7 @@ export class AreaComponent {
 
   ClearImage():void {
     this.imageempurl = 'assets/mapdefault.jpeg';
-    //this.form.controls['map'].setErrors( {'required': false})
+    this.form.controls['map'].setErrors( {'required': false})
   }
 
   add() {
@@ -331,7 +332,6 @@ export class AreaComponent {
 
       confirm.afterClosed().subscribe(async result => {
         if(result) {
-          // console.log("EmployeeService.add(emp)");
           this.as.add(this.area).then( ( responce: []|undefined ) => {
             console.log("Res-"+responce);
             console.log("Un-"+responce==undefined);
